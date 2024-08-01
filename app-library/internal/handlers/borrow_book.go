@@ -19,6 +19,7 @@ type borrowBookResponse struct {
 // @Tags         members
 // @Accept       json
 // @Produce      json
+// @Param data body models.Borrow true "The input borrow book by member_id, book_ids, date borrowed_at"
 // @Success      200  {object}  borrowBookResponse
 // @Failure      400
 // @Failure      404

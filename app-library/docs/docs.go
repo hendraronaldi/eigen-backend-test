@@ -66,6 +66,17 @@ const docTemplate = `{
                     "members"
                 ],
                 "summary": "Borrow books",
+                "parameters": [
+                    {
+                        "description": "The input borrow book by member_id, book_ids, date borrowed_at",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Borrow"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -127,6 +138,17 @@ const docTemplate = `{
                     "members"
                 ],
                 "summary": "Return books",
+                "parameters": [
+                    {
+                        "description": "The input return book by member_id, book_ids, date returned_at",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Return"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -198,6 +220,12 @@ const docTemplate = `{
                 "author": {
                     "type": "string"
                 },
+                "book_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "code": {
                     "type": "string"
                 },
@@ -209,10 +237,30 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Borrow": {
+            "type": "object",
+            "properties": {
+                "book_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "borrowed_at": {
+                    "type": "string"
+                },
+                "member_id": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Member": {
             "type": "object",
             "properties": {
                 "code": {
+                    "type": "string"
+                },
+                "member_id": {
                     "type": "string"
                 },
                 "name": {
@@ -220,6 +268,23 @@ const docTemplate = `{
                 },
                 "total_borrowed_books": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.Return": {
+            "type": "object",
+            "properties": {
+                "book_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "member_id": {
+                    "type": "string"
+                },
+                "returned_at": {
+                    "type": "string"
                 }
             }
         }

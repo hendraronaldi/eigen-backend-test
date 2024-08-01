@@ -8,6 +8,7 @@ import (
 
 type Member struct {
 	ID                 primitive.ObjectID `json:"-" bson:"_id"`
+	MemberID           string             `json:"member_id" bson:"member_id"`
 	Code               string             `json:"code" bson:"code"`
 	Name               string             `json:"name" bson:"name"`
 	BoorowedBooks      []*Book            `json:"-" bson:"borrowed_books"`

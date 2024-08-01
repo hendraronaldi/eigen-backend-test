@@ -31,6 +31,10 @@ definitions:
     properties:
       author:
         type: string
+      book_ids:
+        items:
+          type: string
+        type: array
       code:
         type: string
       stock:
@@ -38,14 +42,38 @@ definitions:
       title:
         type: string
     type: object
+  models.Borrow:
+    properties:
+      book_ids:
+        items:
+          type: string
+        type: array
+      borrowed_at:
+        type: string
+      member_id:
+        type: string
+    type: object
   models.Member:
     properties:
       code:
+        type: string
+      member_id:
         type: string
       name:
         type: string
       total_borrowed_books:
         type: integer
+    type: object
+  models.Return:
+    properties:
+      book_ids:
+        items:
+          type: string
+        type: array
+      member_id:
+        type: string
+      returned_at:
+        type: string
     type: object
 host: localhost:3000
 info:
@@ -85,6 +113,13 @@ paths:
       consumes:
       - application/json
       description: Member borrow books
+      parameters:
+      - description: The input borrow book by member_id, book_ids, date borrowed_at
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Borrow'
       produces:
       - application/json
       responses:
@@ -125,6 +160,13 @@ paths:
       consumes:
       - application/json
       description: Member return books
+      parameters:
+      - description: The input return book by member_id, book_ids, date returned_at
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Return'
       produces:
       - application/json
       responses:

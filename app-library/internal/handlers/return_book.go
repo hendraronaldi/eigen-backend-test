@@ -19,11 +19,12 @@ type returnBookResponse struct {
 // @Tags         members
 // @Accept       json
 // @Produce      json
+// @Param data body models.Return true "The input return book by member_id, book_ids, date returned_at"
 // @Success      200  {object}  returnBookResponse
 // @Failure      400
 // @Failure      404
 // @Failure      500
-// @Router       /api/return [post] {object} models.Return
+// @Router       /api/return [post]
 func (c *ConnectionHandler) ReturnBook(w http.ResponseWriter, r *http.Request) {
 	res := new(returnBookResponse)
 

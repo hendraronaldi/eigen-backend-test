@@ -28,6 +28,7 @@ func NewLibrary(l repositories.Interface) *Library {
 func (lb *Library) GetAllMembers(ctx context.Context) ([]*models.Member, error) {
 	rs, err := lb.libraryRepo.FindAllMembers(ctx)
 	for _, m := range rs {
+		m.MemberID = m.ID.Hex()
 		m.TotalBorrowedBooks = len(m.BoorowedBooks)
 	}
 	return rs, err

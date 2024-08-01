@@ -64,15 +64,17 @@ func (r *Repository) FindAllBooks(ctx context.Context) ([]*models.Book, error) {
 					"author": "$author",
 				},
 				"stock": bson.M{"$sum": 1},
+				"ids":   bson.M{"$push": bson.M{"$toString": "$_id"}},
 			},
 		},
 		{
 			"$project": bson.M{
-				"_id":    primitive.NilObjectID,
-				"code":   "$_id.code",
-				"title":  "$_id.title",
-				"author": "$_id.author",
-				"stock":  "$stock",
+				"_id":      primitive.NilObjectID,
+				"code":     "$_id.code",
+				"title":    "$_id.title",
+				"author":   "$_id.author",
+				"stock":    "$stock",
+				"book_ids": "$ids",
 			},
 		},
 	}
