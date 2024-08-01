@@ -13,6 +13,17 @@ type returnBookResponse struct {
 	Message string `json:"message"`
 }
 
+// ReturnBook godoc
+// @Summary      Return books
+// @Description  Member return books
+// @Tags         members
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  returnBookResponse
+// @Failure      400
+// @Failure      404
+// @Failure      500
+// @Router       /api/return [post] {object} models.Return
 func (c *ConnectionHandler) ReturnBook(w http.ResponseWriter, r *http.Request) {
 	res := new(returnBookResponse)
 

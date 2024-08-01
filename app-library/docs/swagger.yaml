@@ -1,0 +1,144 @@
+definitions:
+  handlers.borrowBookResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  handlers.getAllBooksResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.Book'
+        type: array
+      message:
+        type: string
+    type: object
+  handlers.getAllMembersResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.Member'
+        type: array
+      message:
+        type: string
+    type: object
+  handlers.returnBookResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  models.Book:
+    properties:
+      author:
+        type: string
+      code:
+        type: string
+      stock:
+        type: integer
+      title:
+        type: string
+    type: object
+  models.Member:
+    properties:
+      code:
+        type: string
+      name:
+        type: string
+      total_borrowed_books:
+        type: integer
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Library server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /api/books:
+    get:
+      description: Get all books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.getAllBooksResponse'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: List books
+      tags:
+      - books
+  /api/borrow:
+    post:
+      consumes:
+      - application/json
+      description: Member borrow books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.borrowBookResponse'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Borrow books
+      tags:
+      - members
+  /api/members:
+    get:
+      description: Get all members
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.getAllMembersResponse'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: List members
+      tags:
+      - members
+  /api/return:
+    post:
+      consumes:
+      - application/json
+      description: Member return books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.returnBookResponse'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Return books
+      tags:
+      - members
+swagger: "2.0"

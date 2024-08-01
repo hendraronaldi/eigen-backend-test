@@ -12,6 +12,16 @@ type getAllMembersResponse struct {
 	Data    []*models.Member `json:"data"`
 }
 
+// GetAllMembers godoc
+// @Summary      List members
+// @Description  Get all members
+// @Tags         members
+// @Produce      json
+// @Success      200  {object}  getAllMembersResponse
+// @Failure      400
+// @Failure      404
+// @Failure      500
+// @Router       /api/members [get]
 func (c *ConnectionHandler) GetAllMembers(w http.ResponseWriter, r *http.Request) {
 	res := new(getAllMembersResponse)
 

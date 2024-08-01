@@ -12,6 +12,16 @@ type getAllBooksResponse struct {
 	Data    []*models.Book `json:"data"`
 }
 
+// GetAllBooks godoc
+// @Summary      List books
+// @Description  Get all books
+// @Tags         books
+// @Produce      json
+// @Success      200  {object}  getAllBooksResponse
+// @Failure      400
+// @Failure      404
+// @Failure      500
+// @Router       /api/books [get]
 func (c *ConnectionHandler) GetAllBooks(w http.ResponseWriter, r *http.Request) {
 	res := new(getAllBooksResponse)
 

@@ -13,6 +13,17 @@ type borrowBookResponse struct {
 	Message string `json:"message"`
 }
 
+// BorrowBook godoc
+// @Summary      Borrow books
+// @Description  Member borrow books
+// @Tags         members
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  borrowBookResponse
+// @Failure      400
+// @Failure      404
+// @Failure      500
+// @Router       /api/borrow [post] {object} models.Borrow
 func (c *ConnectionHandler) BorrowBook(w http.ResponseWriter, r *http.Request) {
 	res := new(borrowBookResponse)
 
