@@ -52,6 +52,11 @@ func (r *Repository) FindAllMembers(ctx context.Context) ([]*models.Member, erro
 func (r *Repository) FindAllBooks(ctx context.Context) ([]*models.Book, error) {
 	pipeline := []bson.M{
 		{
+			"$match": bson.M{
+				"is_borrowed": bson.M{"$ne": true},
+			},
+		},
+		{
 			"$group": bson.M{
 				"_id": bson.M{
 					"code":   "$code",
