@@ -13,4 +13,5 @@ type Book struct {
 	Author     string             `json:"author" bson:"author"`
 	IsBorrowed bool               `json:"-" bson:"is_borrowed"`
 	BorrowedAt *time.Time         `json:"-" bson:"borrowed_at"`
+	Stock      int                `json:"stock" bson:"stock"`
 }

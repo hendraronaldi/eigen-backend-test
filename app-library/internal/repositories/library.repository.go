@@ -50,21 +50,40 @@ func (r *Repository) FindAllMembers(ctx context.Context) ([]*models.Member, erro
 }
 
 func (r *Repository) FindAllBooks(ctx context.Context) ([]*models.Book, error) {
-	res, err := r.db.Collection(r.collectionBooks).Find(ctx, bson.M{})
+	pipeline := []bson.M{
+		{
+			"$group": bson.M{
+				"_id": bson.M{
+					"code":   "$code",
+					"title":  "$title",
+					"author": "$author",
+				},
+				"stock": bson.M{"$sum": 1},
+			},
+		},
+		{
+			"$project": bson.M{
+				"_id":    primitive.NilObjectID,
+				"code":   "$_id.code",
+				"title":  "$_id.title",
+				"author": "$_id.author",
+				"stock":  "$stock",
+			},
+		},
+	}
+
+	cursor, err := r.db.Collection(r.collectionBooks).Aggregate(ctx, pipeline)
 	if err != nil {
 		return nil, errors.Wrap(err, "FindAllBooks")
 	}
+	defer cursor.Close(ctx)
 
-	datas := []*models.Book{}
-	for res.Next(ctx) {
-		data := models.Book{}
-		res.Decode(&data)
-		if err != nil {
-			return nil, errors.Wrap(err, "Decode FindAllBooks")
-		}
-		datas = append(datas, &data)
+	var results []*models.Book
+	err = cursor.All(context.Background(), &results)
+	if err != nil {
+		return nil, errors.Wrap(err, "parse FindAllBooks")
 	}
-	return datas, nil
+	return results, nil
 }
 
 func (r *Repository) UpdateMember(ctx context.Context, m *models.Member) error {
